@@ -1,31 +1,24 @@
-# Exercise 1 — Build your own: an API suite agent
+# Prompt library — API suite generation and refinement
 
-The agent definition is in `.claude/agents/api-test-generator.md`.
-- **Claude Code** picks it up automatically.
-- **Other tools:** paste the body of that file (below the `---` header) as the first message, then continue with the prompts here.
+For the guided, step-by-step version, see [labs/lab-01-api-agent.md](../labs/lab-01-api-agent.md).
 
-## 1. Generate
+Agent instructions: [agents/api-test-generator.md](../agents/api-test-generator.md).
+- **Claude Code:** start with *"Use the api-test-generator agent."*
+- **Other tools:** start with *"Read the file agents/api-test-generator.md and follow it as your instructions for the rest of this session."*
+
+## Generate
 
 ```
-Use the api-test-generator agent. Read openapi.yaml and show me the coverage
-matrix first. Wait for my OK before you write any tests.
+Read openapi.yaml and show me the coverage matrix first. Wait for my OK before
+you write any tests.
 ```
-
-Review the matrix. Is every documented status code there? Is the shipping rule tested on both sides of $75.00? Then:
 
 ```
 Approved. Write the suite into tests/api/ and run it with
-npx playwright test --project=api.
+npx playwright test --project=api. Then summarise the results.
 ```
 
-## 2. Refine — pick at least one
-
-**Negative tests**
-```
-Add negative tests for POST /api/cart/items: missing slug, unknown slug (404),
-and adding more than stock in two separate calls (409). Use the product with
-the lowest stock, read from the API.
-```
+## Refine coverage
 
 **Boundaries**
 ```
@@ -34,15 +27,24 @@ subtotal just below, exactly at, and just above the threshold. Build each cart
 from real catalog prices. Don't hardcode amounts.
 ```
 
-**Challenge the output**
+**Negative tests**
+```
+Add negative tests for POST /api/cart/items: missing slug, unknown slug (404),
+and adding more than stock in two separate calls (409). Use the product with
+the lowest stock, read from the API.
+```
+
+**Self-review**
 ```
 Review your own suite as a skeptical senior tester. Which assertion could never
 fail? Which test depends on another test's state? Fix both and explain the
 change.
 ```
 
-## 3. Critique (discuss with your neighbour)
+## Adapting to your own API
 
-- Find one test the agent wrote that **you wouldn't have thought of**.
-- Find one test that is **wrong or weak**.
-- Compare with `reference/api/`. Run it with `npm run test:ref`.
+```
+Read <your-spec>.yaml. Our business rules that the spec doesn't state are:
+<rules>. Show me a coverage matrix that includes them. Wait for my OK before
+writing tests.
+```

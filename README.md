@@ -9,6 +9,10 @@ The sample app is **Flora Mini**, a tiny flower shop. You'll point AI agents at 
 
 ## Quick start
 
+1. **Set up:** follow [PREREQUISITES.md](PREREQUISITES.md). If you did the pre-workshop setup email, it takes about 5 minutes.
+2. **Do the labs:** start at [labs/](labs/README.md).
+
+Short version, if you've done this before:
 ```bash
 git clone <this repo>
 cd self-healing-agents-kit
@@ -25,9 +29,12 @@ You don't need a database, API keys or accounts. All data is generated from a fi
 | Path | What it is |
 |---|---|
 | `app/` | The sample app (Node only, no dependencies) |
-| `openapi.yaml` | API spec, the input for Exercise 1 (also served at `/openapi.yaml`) |
-| `.claude/agents/api-test-generator.md` | The custom agent you'll direct in Exercise 1 |
-| `prompts/` | Prompt library, one file per exercise |
+| `openapi.yaml` | The sample app's API spec, the input for Lab 1 (also served at `/openapi.yaml`) |
+| `labs/` | Step-by-step labs, with steps for each AI tool |
+| `PREREQUISITES.md` | Setup steps, including each of the 4 AI tools |
+| `agents/api-test-generator.md` | The custom agent's instructions (Lab 1), shared by all AI tools |
+| `.claude/agents/` | Claude Code's pointer to that agent |
+| `prompts/` | Prompt library, for reuse on your own projects |
 | `tests/api/`, `tests/ui/` | **Your** agent-generated tests go here |
 | `tests/ui/seed.spec.ts` | Seed test for Playwright's planner and generator agents |
 | `reference/` | Instructor reference suites (8 API, 5 UI) plus the healed UI suite |
@@ -48,11 +55,11 @@ You don't need a database, API keys or accounts. All data is generated from a fi
 
 Tests start their own server on port 3100, so leaving `npm start` running on 3000 never gets in the way.
 
-## Exercises
+## Labs
 
-1. [Build your own: an API suite agent](prompts/01-api-suite.md)
-2. [Adopt what exists: Playwright's planner and generator](prompts/02-plan-and-generate.md)
-3. [Self-healing](prompts/03-heal.md)
+1. [Lab 1: Build your own, an API test agent](labs/lab-01-api-agent.md)
+2. Lab 2: Adopt what exists, Playwright's planner and generator *(coming soon)*
+3. Lab 3: Self-healing *(coming soon)*
 4. [Guardrails](prompts/04-guardrails.md)
 
 ## Supported AI tools
