@@ -38,7 +38,9 @@ Open `openapi.yaml` in your editor and skim it. You'll judge the agent against t
 
 ## Step 2 — Start your agent (2 min)
 
-The agent's instructions are in **`agents/api-test-generator.md`**. Open it and read the *Rules* section. It's short.
+The agent's instructions are in **`agents/api-test-generator.md`**, in the `agents` folder at the **top level** of the kit. Open it and read the *Rules* section. It's short.
+
+> There's also a file with the same name inside the hidden `.claude/agents/` folder. That one is only a small loader for Claude Code, and it points to the file above. You don't need to open it.
 
 Then follow the steps for **your** tool:
 
