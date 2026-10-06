@@ -1,0 +1,27 @@
+{
+  "name": "self-healing-agents-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hands-on kit for the 'Self-Healing Test Automation with Agentic AI' workshop",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node app/server.js",
+    "break": "node scripts/ui-version.mjs v2",
+    "restore": "node scripts/ui-version.mjs v1",
+    "data": "node scripts/generate-data.mjs",
+    "verify": "node scripts/verify-setup.mjs",
+    "test": "playwright test --project=api --project=ui",
+    "test:api": "playwright test --project=api",
+    "test:ui": "playwright test --project=ui",
+    "test:ref": "playwright test --project=ref-api --project=ref-ui",
+    "test:healed": "playwright test --project=healed-ui",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
+}

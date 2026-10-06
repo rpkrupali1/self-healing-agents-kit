@@ -1,0 +1,77 @@
+name: Quality pipeline
+
+# Template: runs the reference suites. Point the test steps at
+# --project=api / --project=ui once your own agent-generated suites are in place.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ui_version:
+        description: App version under test
+        type: choice
+        options: [v1, v2]
+        default: v1
+
+env:
+  UI_VERSION: ${{ inputs.ui_version || 'v1' }}
+
+jobs:
+  api:
+    name: API suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # Switch to `npm ci` once package-lock.json is committed.
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright test --project=ref-api
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: api-report
+          path: playwright-report/
+          retention-days: 14
+
+  ui:
+    name: UI suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --project=ref-ui
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: ui-report
+          path: playwright-report/
+          retention-days: 14
+
+  quality-gate:
+    name: Quality gate
+    needs: [api, ui]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Summarise and enforce
+        run: |
+          {
+            echo "## Quality gate (app ${UI_VERSION})"
+            echo "| Suite | Result |"
+            echo "|---|---|"
+            echo "| API | ${{ needs.api.result }} |"
+            echo "| UI | ${{ needs.ui.result }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ needs.api.result }}" != "success" ] || [ "${{ needs.ui.result }}" != "success" ]; then
+            echo "Quality gate failed: a suite is red. Check the reports before merging." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi

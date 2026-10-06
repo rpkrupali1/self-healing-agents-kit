@@ -1,0 +1,273 @@
+openapi: 3.0.3
+info:
+  title: Flora Mini API
+  version: 1.0.0
+  description: |
+    Sample shop API for the self-healing test automation workshop.
+
+    - All amounts are integer **cents** (`4400` = $44.00).
+    - The cart is per session, tracked by the `sid` cookie. The server sets it on the first cart or checkout call.
+    - Shipping is **$8.00** when the subtotal is below **$75.00**, and free at or above it. An empty cart has no shipping.
+    - Data is deterministic: the default seed (42) always produces the same catalog.
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: Catalog
+  - name: Cart
+  - name: Orders
+paths:
+  /api/health:
+    get:
+      summary: Health check
+      operationId: getHealth
+      responses:
+        '200':
+          description: Service is up
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, uiVersion, seed]
+                properties:
+                  status: { type: string, enum: [ok] }
+                  uiVersion: { type: string, enum: [v1, v2] }
+                  seed: { type: integer }
+  /api/categories:
+    get:
+      tags: [Catalog]
+      summary: List categories
+      operationId: listCategories
+      responses:
+        '200':
+          description: All categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Category' }
+  /api/products:
+    get:
+      tags: [Catalog]
+      summary: List products
+      operationId: listProducts
+      parameters:
+        - name: category
+          in: query
+          required: false
+          description: Category slug to filter by
+          schema: { type: string }
+      responses:
+        '200':
+          description: Products, optionally filtered by category
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Product' }
+        '400':
+          description: Unknown category
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /api/products/{slug}:
+    get:
+      tags: [Catalog]
+      summary: Get a product
+      operationId: getProduct
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The product
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Product' }
+        '404':
+          description: No product with this slug
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /api/cart:
+    get:
+      tags: [Cart]
+      summary: Get the current cart
+      operationId: getCart
+      responses:
+        '200':
+          description: The session's cart (empty if new)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Cart' }
+  /api/cart/items:
+    post:
+      tags: [Cart]
+      summary: Add a product to the cart
+      description: Adding a product already in the cart increases its quantity. The total quantity cannot exceed stock.
+      operationId: addCartItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AddItemRequest' }
+      responses:
+        '201':
+          description: Item added; returns the updated cart
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Cart' }
+        '400':
+          description: Invalid JSON, missing slug, or quantity outside 1–10
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: Unknown product
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '409':
+          description: Requested quantity exceeds stock
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /api/cart/items/{slug}:
+    delete:
+      tags: [Cart]
+      summary: Remove a product from the cart
+      operationId: removeCartItem
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: Item removed; returns the updated cart
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Cart' }
+        '404':
+          description: Product is not in the cart
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /api/checkout:
+    post:
+      tags: [Orders]
+      summary: Place an order for the current cart
+      description: On success the cart is emptied.
+      operationId: checkout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CheckoutRequest' }
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Order' }
+        '400':
+          description: Empty cart, missing name, or invalid email
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /api/orders/{id}:
+    get:
+      tags: [Orders]
+      summary: Get an order
+      operationId: getOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, pattern: '^ORD-\d{5}$' }
+      responses:
+        '200':
+          description: The order
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Order' }
+        '404':
+          description: No order with this id
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+components:
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      schema: { type: string }
+  schemas:
+    Category:
+      type: object
+      additionalProperties: false
+      required: [slug, name]
+      properties:
+        slug: { type: string, example: candles }
+        name: { type: string, example: Candles }
+    Product:
+      type: object
+      additionalProperties: false
+      required: [slug, name, category, description, price, stock]
+      properties:
+        slug: { type: string, example: peony-bouquet }
+        name: { type: string, example: Peony Bouquet }
+        category: { type: string, example: clay-flowers }
+        description: { type: string }
+        price: { type: integer, minimum: 1, description: Unit price in cents }
+        stock: { type: integer, minimum: 0 }
+    AddItemRequest:
+      type: object
+      required: [slug, quantity]
+      properties:
+        slug: { type: string }
+        quantity: { type: integer, minimum: 1, maximum: 10 }
+    CartItem:
+      type: object
+      additionalProperties: false
+      required: [slug, name, unitPrice, quantity, lineTotal]
+      properties:
+        slug: { type: string }
+        name: { type: string }
+        unitPrice: { type: integer, description: Cents }
+        quantity: { type: integer, minimum: 1 }
+        lineTotal: { type: integer, description: 'unitPrice × quantity, in cents' }
+    Cart:
+      type: object
+      additionalProperties: false
+      required: [items, subtotal, shipping, total]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/CartItem' }
+        subtotal: { type: integer, description: 'Sum of line totals, in cents' }
+        shipping: { type: integer, description: '800 below a 7500 subtotal, else 0; 0 for an empty cart' }
+        total: { type: integer, description: 'subtotal + shipping, in cents' }
+    CheckoutRequest:
+      type: object
+      required: [name, email]
+      properties:
+        name: { type: string, minLength: 1 }
+        email: { type: string, format: email }
+    Order:
+      type: object
+      additionalProperties: false
+      required: [id, name, email, items, subtotal, shipping, total, createdAt]
+      properties:
+        id: { type: string, example: ORD-00001 }
+        name: { type: string }
+        email: { type: string, format: email }
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/CartItem' }
+        subtotal: { type: integer }
+        shipping: { type: integer }
+        total: { type: integer }
+        createdAt: { type: string, format: date-time }
+    Error:
+      type: object
+      additionalProperties: false
+      required: [error]
+      properties:
+        error: { type: string }

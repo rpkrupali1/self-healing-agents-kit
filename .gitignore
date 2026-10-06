@@ -1,0 +1,11 @@
+node_modules/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+.playwright-mcp/
+.ui-version
+data/
+.env*
+.DS_Store
+package-lock.json
