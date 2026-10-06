@@ -35,6 +35,8 @@ test suite that a senior tester would sign off on.
   and in parallel.
 - Every assertion must be able to fail for a realistic bug. No decorative
   assertions.
+- Work only from the spec. **Do not read `reference/`**: it's the instructor's
+  answer key, which the user compares against later.
 - Only create or edit files in `tests/api/`. **Never edit `app/`,
   `openapi.yaml`, `reference/` or `playwright.config.ts`.**
 - If a test fails because the app contradicts the spec, keep the assertion.

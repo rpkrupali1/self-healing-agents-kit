@@ -115,7 +115,7 @@ Then follow the steps for **your** tool:
 
 This is the cheapest moment to catch gaps. Tick each one:
 
-- [ ] All **9 operations** are listed: health, categories, products list, product by slug, get cart, add item, remove item, checkout, get order
+- [ ] All **9 operations** are listed: health, categories, products list, product by slug, get cart, add item, remove item, checkout, get order. *Some agents list the `?category=` filter as its own row, so you may see 10. That's fine.*
 - [ ] **400, 404 and 409** each appear somewhere
 - [ ] The **$75 shipping boundary** is planned (below, at, above)
 - [ ] **Quantity boundaries** are planned: 0, 1, 10, 11, and a non-integer
