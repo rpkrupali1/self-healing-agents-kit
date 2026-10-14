@@ -27,20 +27,20 @@ If a command says *"not recognized"* or *"command not found"*, the tool isn't in
 
 ## Step 2 — Get the kit
 
-```bash
-git clone <kit repo URL>
-cd self-healing-agents-kit
-npm install
-npx playwright install chromium
-```
+In your terminal, run these **one at a time, in order**:
 
-`npx playwright install chromium` is the big download (~150 MB). If you did the setup email, Chromium is already cached and this finishes in seconds.
+| # | Run this | ✅ You should see |
+|---|---|---|
+| 1 | `git clone <kit repo URL>` | A new folder `self-healing-agents-kit` is created |
+| 2 | `cd self-healing-agents-kit` | Your prompt now ends in `self-healing-agents-kit` |
+| 3 | `npm install` | Ends with `added … packages`. Warnings are fine; errors are not |
+| 4 | `npx playwright install chromium` | Download progress bars, then the prompt returns. If you did the setup email, Chromium is already cached and this finishes in seconds |
 
-| Command | ✅ Expected result |
-|---|---|
-| `git clone …` | A new folder `self-healing-agents-kit` is created |
-| `npm install` | Ends with `added … packages`. Warnings are fine; errors are not |
-| `npx playwright install chromium` | Download progress bars, then the prompt returns with no error. If Chromium is already installed, it finishes straight away with no output |
+**Windows: if you see** *"npm.ps1 cannot be loaded because running scripts is disabled on this system"*, Windows is blocking `npm`. Fix it once (no admin rights needed; it changes only your own account):
+
+1. In PowerShell, run: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
+2. Answer **Y** if asked, then close PowerShell, open a new one, and run the command again.
+3. If it says the setting is *overridden by a policy* (common on company laptops), use **Command Prompt** (`cmd`) instead of PowerShell for the `npm` and `npx` commands.
 
 ## Step 3 — Check your setup
 
@@ -103,7 +103,7 @@ Needs a Claude Pro plan or higher, or API billing. Use it in the **terminal** (A
 
 **A2. Claude Code inside VS Code**
 1. In VS Code, open the Extensions view (**Ctrl+Shift+X**, or **⇧⌘X** on Mac).
-2. Search for **Claude Code**, and install the one published by **Anthropic**.
+2. In the search box, type the extension ID `anthropic.claude-code`. Install **Claude Code**, published by **Anthropic** (with a verified ✓).
 3. Open the kit folder: **File → Open Folder…**
 4. Click the **Claude** icon (the spark ✱) in the sidebar or the editor's top-right corner, and sign in when asked.
 5. Check: type `say hello`. You should get a reply.
@@ -116,10 +116,10 @@ npx playwright init-agents --loop=claude
 
 ### Option B — VS Code + GitHub Copilot *(free option)*
 Needs VS Code 1.105 or newer. Copilot Free is enough.
-1. In VS Code, open the Extensions view (**Ctrl+Shift+X**, or **⇧⌘X** on Mac), and install **GitHub Copilot**. It includes Copilot Chat.
+1. In VS Code, open the Extensions view (**Ctrl+Shift+X**, or **⇧⌘X** on Mac). In the search box, type the extension ID `GitHub.copilot-chat`. Install **GitHub Copilot Chat**, published by **GitHub** (with a verified ✓). Don't install the older **GitHub Copilot** extension (`GitHub.copilot`): it's deprecated, and Copilot Chat now includes everything. Searching just "copilot" also shows lookalikes from other publishers; don't install those.
 2. Sign in with your GitHub account when prompted, and turn on **Copilot Free** if asked.
 3. Open the kit folder: **File → Open Folder…**
-4. Open the Chat view (**Ctrl+Alt+I**, or **⌃⌘I** on Mac). Set the mode dropdown to **Agent**.
+4. Open the Chat view (**Ctrl+Alt+I**, or **⌃⌘I** on Mac). Below the chat box, set the mode dropdown to **Agent**. Leave the button next to it on **Auto**, optimized for **Balance**. You don't need to choose a model.
 5. Check: type `say hello`. You should get a reply.
 6. Install Playwright's agents. Open **Terminal → New Terminal** and run:
    ```bash
@@ -153,7 +153,7 @@ Needs a ChatGPT plan that includes Codex, or an OpenAI API key.
 It lets you run a test with one click and watch it in a real browser. This is handy for reviewing what the agents write.
 
 1. In VS Code, open the Extensions view (**Ctrl+Shift+X**, or **⇧⌘X** on Mac).
-2. Search for **Playwright Test for VS Code**, and install the one published by **Microsoft**.
+2. In the search box, type the extension ID `ms-playwright.playwright`. Install **Playwright Test for VS Code**, published by **Microsoft** (with a verified ✓).
 3. Open the kit folder, then click the **Testing** icon (the flask 🧪) in the left sidebar.
 4. Check: you should see the kit's tests listed. Click ▶ next to `seed` under `tests/ui`. It turns green.
 

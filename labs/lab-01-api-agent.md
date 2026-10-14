@@ -65,7 +65,7 @@ Then follow the steps for **your** tool:
 2. Open Chat: **Ctrl+Alt+I** (or **⌃⌘I** on Mac).
 3. At the bottom of the Chat panel:
    - Set the mode dropdown to **Agent**. *Ask* or *Edit* mode can't run commands.
-   - Pick a capable model from the model dropdown.
+   - Leave the button next to it on **Auto**, optimized for **Balance**. If the agent's tests look weak, switch it to **Intelligence**.
 4. Paste this prompt:
    ```
    Read the file agents/api-test-generator.md and follow it as your
@@ -160,7 +160,7 @@ npm run report
 
 ## Step 6 — Refine with ONE targeted prompt (5 min)
 
-Pick **one** of these and paste it:
+Pick **one** of these and paste it. If your suite already covers an option, pick another; **C** works for every suite:
 
 **A. Boundaries**
 ```
