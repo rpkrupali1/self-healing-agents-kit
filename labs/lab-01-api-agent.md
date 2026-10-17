@@ -41,6 +41,8 @@ Open `openapi.yaml` in your editor and skim it. You'll judge the agent against t
 The agent's instructions are in **`agents/api-test-generator.md`**, in the `agents` folder at the **top level** of the kit. Open it and read the *Rules* section. It's short.
 
 > There's also a file with the same name inside the hidden `.claude/agents/` folder. That one is only a small loader for Claude Code, and it points to the file above. You don't need to open it.
+>
+> **Using Copilot, Codex or opencode?** There's nothing extra to set up. The prompt for your tool below tells it to read `agents/api-test-generator.md`, so every tool follows the same instructions.
 
 Then follow the steps for **your** tool:
 
@@ -207,9 +209,21 @@ The instructor's reference suite is in `reference/api/`. Run it:
 npm run test:ref
 ```
 
-Open `reference/api/cart-checkout.spec.ts` and compare it with your agent's cart tests. Look at:
-- How are expected totals calculated? From the spec's rules, or hardcoded?
-- Which quantities are tested? Why does testing **more than 1** matter?
+Then let your agent do the comparison. It wasn't allowed to read `reference/` while writing your tests, but now it may. Paste:
+```
+Now compare your suite in tests/api/ with the instructor's reference suite in
+reference/api/. You may read reference/ now. Answer from the test files only:
+don't open anything in app/, don't run any tests, and don't change any files.
+Answer briefly, in a table:
+1. How does each suite calculate expected totals: from the spec's rules, or
+   hardcoded?
+2. Which cart quantities does each suite test? Why could testing only
+   quantity 1 be risky?
+3. One thing the reference covers that yours doesn't, and one thing yours
+   covers that the reference doesn't.
+```
+
+💡 Look closely at the answer to question 2. Testing only quantity 1 can't catch every pricing bug. Remember that for later.
 
 ---
 
