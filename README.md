@@ -9,18 +9,20 @@ The sample app is **Flora Mini**, a tiny flower shop. You'll point AI agents at 
 
 ## Quick start
 
-1. **Set up:** follow [PREREQUISITES.md](PREREQUISITES.md). If you did the pre-workshop setup email, it takes about 5 minutes.
+1. **Set up:** follow [SETUP.md](SETUP.md). If you did the setup guide emailed before the workshop, you only need Parts A and B, about 5 minutes.
 2. **Do the labs:** start at [labs/](labs/README.md).
 
 Short version, if you've done this before:
 ```bash
-git clone <this repo>
+git clone https://github.com/rpkrupali1/self-healing-agents-kit.git
 cd self-healing-agents-kit
 npm install
 npx playwright install chromium
-npm run verify       # checks Node, Git, Playwright, Chromium and the app
-npm start            # http://localhost:3000
+npm run verify                              # checks Node, Git, Playwright, Chromium and the app
+npx playwright init-agents --loop=claude    # or: vscode | codex | opencode
 ```
+
+Run the app yourself with `npm start`, then open http://localhost:3000.
 
 You don't need a database, API keys or accounts. All data is generated from a fixed seed, so everyone sees the same catalog.
 
@@ -30,8 +32,8 @@ You don't need a database, API keys or accounts. All data is generated from a fi
 |---|---|
 | `app/` | The sample app (Node only, no dependencies) |
 | `openapi.yaml` | The sample app's API spec, the input for Lab 1 (also served at `/openapi.yaml`) |
+| `SETUP.md` | In-room setup (clone, verify, `init-agents`), plus catch-up steps for anyone who skipped the emailed setup guide |
 | `labs/` | Step-by-step labs, with steps for each AI tool |
-| `PREREQUISITES.md` | Setup steps, including each of the 4 AI tools |
 | `agents/api-test-generator.md` | The custom agent's instructions (Lab 1), shared by all AI tools |
 | `.claude/agents/` | Claude Code's pointer to that agent |
 | `prompts/` | Prompt library, for reuse on your own projects |
@@ -64,11 +66,10 @@ Tests start their own server on port 3100, so leaving `npm start` running on 300
 
 ## Supported AI tools
 
-Use any **one**: Claude Code, VS Code 1.105+ with GitHub Copilot, Codex, or opencode. Set up Playwright's agents for your tool with:
+Use any **one**: Claude Code (terminal or VS Code extension), VS Code 1.105+ with GitHub Copilot Chat, Codex, or opencode.
 
-```bash
-npx playwright init-agents --loop=claude    # or: vscode | codex | opencode
-```
+- Installing your tool: [SETUP.md](SETUP.md), Part C2.
+- Installing Playwright's agents for your tool: [SETUP.md](SETUP.md), Part B3.
 
 ## Adapting this to your own stack
 

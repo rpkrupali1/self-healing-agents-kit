@@ -13,7 +13,7 @@
 
 ## Before you begin (1 min)
 
-- [ ] You've done [PREREQUISITES.md](../PREREQUISITES.md), and `npm run verify` shows 5 × PASS.
+- [ ] You've done [SETUP.md](../SETUP.md) Parts A and B: `npm run verify` shows 5 × PASS, and you ran `init-agents` for your tool.
 - [ ] You're in the kit folder: `cd self-healing-agents-kit`
 - [ ] The app is on its normal version:
   ```bash

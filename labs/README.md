@@ -1,6 +1,6 @@
 # Labs
 
-Do [PREREQUISITES.md](../PREREQUISITES.md) first.
+Do [SETUP.md](../SETUP.md) first.
 
 | Lab | Topic | Time |
 |---|---|---|
