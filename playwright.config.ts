@@ -27,8 +27,9 @@ export default defineConfig({
   },
   projects: [
     // Where YOUR agents write tests during the workshop.
-    { name: 'api', testDir: 'tests/api' },
+    // ui first: init-agents looks for the seed test in the first project's folder.
     { name: 'ui', testDir: 'tests/ui' },
+    { name: 'api', testDir: 'tests/api' },
     // Instructor reference suites, for comparison with your agents' output.
     { name: 'ref-api', testDir: 'reference/api' },
     { name: 'ref-ui', testDir: 'reference/ui' },
