@@ -1,5 +1,5 @@
 // Flora Mini — zero-dependency sample shop for the self-healing workshop.
-// Run: node app/server.js   (PORT, SEED and UI_VERSION env vars are optional)
+// Run: node app/server.js [--port=3001]   (PORT, SEED and UI_VERSION env vars are optional)
 
 import http from 'node:http';
 import { existsSync, readFileSync } from 'node:fs';
@@ -12,7 +12,9 @@ import * as views from './views.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const VERSION_FILE = path.join(ROOT, '.ui-version');
-const PORT = Number(process.env.PORT ?? 3000);
+// --port works the same on every OS (npm start -- --port=3001); PORT is for the test runner.
+const portArg = process.argv.find((a) => a.startsWith('--port='))?.split('=')[1];
+const PORT = Number(portArg ?? process.env.PORT ?? 3000);
 const SEED = Number(process.env.SEED ?? 42);
 
 const { categories, products } = generateCatalog(SEED);
@@ -247,6 +249,14 @@ http
       console.error(err);
       if (!res.headersSent) json(res, 500, { error: 'internal error' });
     }
+  })
+  .on('error', (err) => {
+    if (err.code !== 'EADDRINUSE') throw err;
+    const next = PORT + 1;
+    console.error(`Port ${PORT} is already in use by another program.`);
+    console.error(`Start Flora Mini on another port instead:  npm start -- --port=${next}`);
+    console.error(`Then open http://localhost:${next}`);
+    process.exit(1);
   })
   .listen(PORT, () => {
     console.log(`Flora Mini running at http://localhost:${PORT}  (UI ${uiVersion()}, seed ${SEED})`);

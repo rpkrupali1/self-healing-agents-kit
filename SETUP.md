@@ -75,6 +75,14 @@ npm start
 
 ✅ You should see `Flora Mini running at http://localhost:3000`. Open **http://localhost:3000** in your browser and click around: it's a small flower shop.
 
+**If it says `Port 3000 is already in use`:** another program on your laptop is using that port. Don't close it; just start Flora Mini on another port, then open that address instead:
+
+```bash
+npm start -- --port=3001
+```
+
+This works the same on Windows, Mac and Linux. Nothing else in the workshop depends on port 3000.
+
 Leave this terminal running for the rest of the workshop. Lab 2 needs it. Your tests start their own copy of the app on port 3100, so the two never clash.
 
 ### ✅ Ready
