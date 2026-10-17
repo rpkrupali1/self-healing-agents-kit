@@ -65,13 +65,26 @@ Type `say hello`. ✅ You should get a reply. If not, see Part B2 for your tool.
 
 **Optional, if you installed the Playwright extension:** click the **Testing** icon (🧪) in VS Code's left sidebar, then ▶ next to `seed` under `tests/ui`. It turns green.
 
+### A5. Start the app (keep it running)
+
+Open a **second terminal**, go to the kit folder, and run:
+
+```bash
+npm start
+```
+
+✅ You should see `Flora Mini running at http://localhost:3000`. Open **http://localhost:3000** in your browser and click around: it's a small flower shop.
+
+Leave this terminal running for the rest of the workshop. Lab 2 needs it. Your tests start their own copy of the app on port 3100, so the two never clash.
+
 ### ✅ Ready
 
 - [ ] `npm run verify` shows 5 × PASS
 - [ ] I ran the `init-agents` line for my tool
 - [ ] My AI tool is open in the kit folder and replied to `say hello`
+- [ ] The app is running in a second terminal, and http://localhost:3000 shows the shop
 
-Now open [labs/](labs/README.md) and start Lab 1.
+**Next:** the instructor gives a short tour, then you start [Lab 1](labs/lab-01-api-agent.md).
 
 ---
 
