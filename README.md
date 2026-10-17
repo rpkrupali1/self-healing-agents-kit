@@ -9,7 +9,7 @@ The sample app is **Flora Mini**, a tiny flower shop. You'll point AI agents at 
 
 ## Quick start
 
-1. **Set up:** follow [SETUP.md](SETUP.md). If you did the setup guide emailed before the workshop, you only need Parts A and B, about 5 minutes.
+1. **Set up:** follow [SETUP.md](SETUP.md). If you did the setup guide emailed before the workshop, you only need Part A, about 5 minutes.
 2. **Do the labs:** start at [labs/](labs/README.md).
 
 Short version, if you've done this before:
@@ -68,8 +68,8 @@ Tests start their own server on port 3100, so leaving `npm start` running on 300
 
 Use any **one**: Claude Code (terminal or VS Code extension), VS Code 1.105+ with GitHub Copilot Chat, Codex, or opencode.
 
-- Installing your tool: [SETUP.md](SETUP.md), Part C2.
-- Installing Playwright's agents for your tool: [SETUP.md](SETUP.md), Part B3.
+- Installing your tool: [SETUP.md](SETUP.md), Part B2.
+- Installing Playwright's agents for your tool: [SETUP.md](SETUP.md), Part A3.
 
 ## Adapting this to your own stack
 

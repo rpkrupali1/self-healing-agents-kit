@@ -1,34 +1,23 @@
 # Workshop setup
 
-This page has three parts:
-
 | Part | Who | When |
 |---|---|---|
-| **A. Quick check** | Everyone | First minute in the room |
-| **B. Set up the kit** | Everyone | In the room, ~5 minutes |
-| **C. Catch-up** | Only if you skipped the setup guide that was emailed before the workshop, or Part A fails | Before Part B, ~20 minutes |
+| **A. Set up the kit** | Everyone | In the room, ~5 minutes |
+| **B. Catch-up** | Only if you skipped the setup guide emailed before the workshop, or a check in Part A fails | **Before** Part A, ~20 minutes |
+
+**Did the emailed setup guide?** Start at Part A.  **Didn't?** Start at Part B, then do Part A.
 
 Stuck at any point? Pair with a neighbour, or ask for the browser-only option.
 
 ---
 
-## Part A — Quick check (1 min)
+## Part A — Set up the kit (5 min)
 
-You did these with the setup guide that was emailed before the workshop. Check they still work:
+> ⚠️ **Skipped the setup guide that was emailed before the workshop?** Do **[Part B](#part-b--catch-up-if-you-skipped-the-emailed-setup-guide) first** (~20 min), then come back here. Part A needs Node.js (which includes `npm`), Git and an AI tool, and Part B installs them.
 
-| Check | ✅ You should see | If not |
-|---|---|---|
-| `node --version` | `v20` or higher | Part C1 |
-| `git --version` | `git version 2.x` | Part C1 |
-| Your AI tool replies to `say hello` | A reply | Part C2 |
+### A1. Get the kit
 
-All three fine? Go to Part B.
-
----
-
-## Part B — Set up the kit (5 min)
-
-### B1. Get the kit
+If `git` or `npm` says *"not recognized"* / *"command not found"*, Node.js or Git isn't installed yet: do Part B first.
 
 In your terminal, run these **one at a time, in order**:
 
@@ -45,7 +34,7 @@ In your terminal, run these **one at a time, in order**:
 2. Answer **Y** if asked, then close PowerShell, open a new one, and run the command again.
 3. If it says the setting is *overridden by a policy* (common on company laptops), use **Command Prompt** (`cmd`) instead of PowerShell for the `npm` and `npx` commands.
 
-### B2. Check your setup
+### A2. Check your setup
 
 ```bash
 npm run verify
@@ -53,7 +42,7 @@ npm run verify
 
 ✅ You should see **5 × PASS**: Node.js, Git, Playwright, Chromium, and the sample app. If any line says **FAIL**, it tells you the command that fixes it.
 
-### B3. Install Playwright's test agents for your AI tool
+### A3. Install Playwright's test agents for your AI tool
 
 Playwright's planner, generator and healer agents must be installed inside the kit, so this step is only possible now. In the kit folder, run the **one** line for your tool:
 
@@ -66,11 +55,13 @@ Playwright's planner, generator and healer agents must be installed inside the k
 
 > The agent files depend on your Playwright version. If you upgrade Playwright later, run the line again.
 
-### B4. Open the kit in your AI tool
+### A4. Open the kit in your AI tool, and say hello
 
 - **Claude Code (terminal):** in the kit folder, run `claude`.
 - **VS Code (Claude Code extension or Copilot):** **File → Open Folder…**, and pick the kit folder.
 - **Codex / opencode:** in the kit folder, run `codex` or `opencode`.
+
+Type `say hello`. ✅ You should get a reply. If not, see Part B2 for your tool.
 
 **Optional, if you installed the Playwright extension:** click the **Testing** icon (🧪) in VS Code's left sidebar, then ▶ next to `seed` under `tests/ui`. It turns green.
 
@@ -78,17 +69,17 @@ Playwright's planner, generator and healer agents must be installed inside the k
 
 - [ ] `npm run verify` shows 5 × PASS
 - [ ] I ran the `init-agents` line for my tool
-- [ ] My AI tool is open in the kit folder
+- [ ] My AI tool is open in the kit folder and replied to `say hello`
 
 Now open [labs/](labs/README.md) and start Lab 1.
 
 ---
 
-## Part C — Catch-up: if you skipped the emailed setup guide
+## Part B — Catch-up: if you skipped the emailed setup guide
 
-These are the same steps as the setup guide that was emailed before the workshop. Do them, then go back to Part B.
+These are the same steps as the setup guide that was emailed before the workshop. Do them, then go back to Part A.
 
-### C1. Install the basics
+### B1. Install the basics
 
 | Tool | Get it from | Check it works | ✅ Expected result |
 |---|---|---|---|
@@ -102,7 +93,7 @@ Run the commands in a terminal: **PowerShell** on Windows, **Terminal** on Mac o
 
 If a command says *"not recognized"* or *"command not found"*, the tool isn't installed, or the terminal was open before you installed it. Close the terminal, open a new one, and try again.
 
-### C2. Set up ONE AI agent tool
+### B2. Set up ONE AI agent tool
 
 Pick **one**. Everything in the workshop works with all four.
 
@@ -173,7 +164,7 @@ Needs a ChatGPT plan that includes Codex, or an OpenAI API key.
 2. Run `opencode` and connect a model provider, following its prompts.
 3. Check: type `say hello`. You should get a reply. Then exit opencode.
 
-### C3. Install the Playwright extension for VS Code (recommended)
+### B3. Install the Playwright extension for VS Code (recommended)
 
 It lets you run a test with one click and watch it in a real browser. This is handy for reviewing what the agents write.
 
