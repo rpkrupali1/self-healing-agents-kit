@@ -1,4 +1,6 @@
-# Exercise 3 — Self-healing
+# Prompt library — self-healing with triage
+
+For the guided, step-by-step version, see [labs/lab-03-self-healing.md](../labs/lab-03-self-healing.md).
 
 ## 1. Ship the "refactor"
 

@@ -1,4 +1,6 @@
-# Exercise 2 — Adopt what exists: Playwright's planner and generator
+# Prompt library — planning and generating UI tests
+
+For the guided, step-by-step version, see [labs/lab-02-plan-and-generate.md](../labs/lab-02-plan-and-generate.md).
 
 ## One-time setup (skip if you did it before the workshop)
 
@@ -18,7 +20,8 @@ Start the app in a second terminal with `npm start`, then:
 Use the playwright-test-planner agent. Explore the Flora Mini app starting from
 the seed test tests/ui/seed.spec.ts. Plan tests for: browsing and filtering the
 shop, adding to the cart from the product page, removing items, and checkout
-including validation errors. Save the plan as specs/shop-plan.md.
+including validation errors. Keep it to the 10 most important scenarios, with
+one test file per section. Save the plan as specs/shop-plan.md.
 ```
 
 Review `specs/shop-plan.md` before generating:

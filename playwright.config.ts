@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
-// Tests use their own port and always boot a fresh server, so a `npm start`
-// you left running on :3000 never answers for the suite.
+// Tests use their own port (3100), so a `npm start` you left running on :3000
+// never answers for the suite.
 const PORT = 3100;
 
 export default defineConfig({
@@ -22,7 +22,10 @@ export default defineConfig({
   webServer: {
     command: 'node app/server.js',
     url: `http://localhost:${PORT}/api/health`,
-    reuseExistingServer: false,
+    // Playwright's agents (planner, generator, healer) start the app on 3100 and
+    // keep it running for the session. Reuse it locally instead of failing with
+    // "already used". CI always starts a fresh one.
+    reuseExistingServer: !process.env.CI,
     env: { PORT: String(PORT) },
   },
   projects: [

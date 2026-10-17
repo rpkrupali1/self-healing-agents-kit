@@ -83,7 +83,7 @@ npm start -- --port=3001
 
 This works the same on Windows, Mac and Linux. Nothing else in the workshop depends on port 3000.
 
-Leave this terminal running for the rest of the workshop. Lab 2 needs it. Your tests start their own copy of the app on port 3100, so the two never clash.
+Leave this terminal running for the rest of the workshop, so you can see the app while the agents test it. Your tests start their own copy of the app on port 3100, so the two never clash.
 
 ### ✅ Ready
 

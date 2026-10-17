@@ -60,8 +60,8 @@ Tests start their own server on port 3100, so leaving `npm start` running on 300
 ## Labs
 
 1. [Lab 1: Build your own, an API test agent](labs/lab-01-api-agent.md)
-2. Lab 2: Adopt what exists, Playwright's planner and generator *(coming soon)*
-3. Lab 3: Self-healing *(coming soon)*
+2. [Lab 2: Adopt what exists, Playwright's planner and generator](labs/lab-02-plan-and-generate.md)
+3. [Lab 3: Self-healing](labs/lab-03-self-healing.md)
 4. [Guardrails](prompts/04-guardrails.md)
 
 ## Supported AI tools
