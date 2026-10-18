@@ -62,6 +62,19 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      # Heals happen on a developer's laptop (Lab 3). The healer's table goes in
+      # heal-log.md with the healed tests, and CI shows it here for the reviewer.
+      - name: Show heal log for review
+        run: |
+          if [ -f heal-log.md ]; then
+            {
+              echo "## Heal log: review every change before merging"
+              cat heal-log.md
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No heal-log.md in this change." >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Summarise and enforce
         run: |
           {
