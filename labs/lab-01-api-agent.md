@@ -146,7 +146,7 @@ npx playwright test --project=api. Then summarise the results.
 ```
 
 ✅ **Expected:**
-- New files in `tests/api/`, such as `catalog.spec.ts`, `cart.spec.ts` and `orders.spec.ts`
+- **Three** new files in `tests/api/`: `catalog.spec.ts`, `cart.spec.ts` and `orders.spec.ts`. Only two? See Troubleshooting
 - The agent runs the tests and reports how many passed and failed
 
 > 💡 **On this version of the app, the API matches the spec.** So a failing test here usually means **the test is wrong**, not the app. Keep that failure. It's great material for Step 7.
@@ -246,6 +246,7 @@ Answer briefly, in a table:
 | Problem | Fix |
 |---|---|
 | Agent wrote tests without showing a matrix | Say: *"Stop. Delete what you wrote and show me the coverage matrix first."* |
+| One of the three files is missing (often `orders.spec.ts`) | Check first: `grep -n "checkout" tests/api/*.spec.ts`. The tests may be in another file, which is fine. If they're really missing, say: *"You haven't written tests/api/orders.spec.ts. Write it now, covering every row for checkout and orders in tests/api/coverage-matrix.md, then run the suite."* |
 | Agent put files somewhere other than `tests/api/` | Say: *"Move the tests into tests/api/."* Tests elsewhere won't run with `npm run test:api` |
 | Agent edited `app/` or `openapi.yaml` | Undo it with `git checkout -- app openapi.yaml`, then remind it of the rules in `agents/api-test-generator.md` |
 | `Error: No tests found` | The files aren't in `tests/api/`, or don't end in `.spec.ts` |

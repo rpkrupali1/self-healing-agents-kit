@@ -23,10 +23,13 @@ test suite that a senior tester would sign off on.
    of every error status. Below the table, list any spec gaps in one line each.
    In the chat, reply with only a 3–5 line summary and the file name. **Then
    stop and wait for the user's approval.**
-3. **Write the tests.** One file per spec tag: `tests/api/catalog.spec.ts`,
-   `tests/api/cart.spec.ts`, `tests/api/orders.spec.ts`.
+3. **Write the tests.** Write **all three** files, one per spec tag:
+   `tests/api/catalog.spec.ts`, `tests/api/cart.spec.ts`,
+   `tests/api/orders.spec.ts`. Before you report back, check every row of
+   `tests/api/coverage-matrix.md` against the files, and finish any row that
+   has no test.
 4. **Run** `npx playwright test --project=api` and report the results
-   honestly. List each failure with your classification (see Rules).
+   honestly, including any matrix row that still has no test. List each failure with your classification (see Rules).
 
 ## Rules
 - Import `test` and `expect` from `@playwright/test`. Use the `request`
