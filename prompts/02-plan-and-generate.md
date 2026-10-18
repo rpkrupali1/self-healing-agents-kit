@@ -34,7 +34,7 @@ Review `specs/shop-plan.md` before generating:
 ```
 Use the playwright-test-generator agent to turn specs/shop-plan.md into tests
 in tests/ui/. Prefer getByRole and getByLabel locators. Keep one scenario per
-test.
+test. When you're done, close the browser.
 ```
 
 ## 3. Review the locator strategy

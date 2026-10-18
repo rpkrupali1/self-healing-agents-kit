@@ -98,7 +98,7 @@ Then follow the steps for **your** tool:
 
 > The agent explores the app through the test runner, which starts its own copy of the app. You won't see it in your browser tab; that's normal.
 >
-> **A browser window the agent opened stays open after the plan is done.** Leave it: the generator reuses it in Step 4. It closes when you exit your AI tool.
+> **A browser window the agent opened stays open after the plan is done.** Leave it: the generator reuses it in Step 4, and the Step 4 prompt asks it to close the browser at the end. If it's still open after that, close it yourself, or it closes when you exit your AI tool.
 
 ---
 
@@ -145,7 +145,7 @@ Paste:
 ```
 Use the playwright-test-generator agent to turn specs/shop-plan.md into tests
 in tests/ui/, using the file names in the plan. Prefer getByRole and getByLabel
-locators. Keep one scenario per test.
+locators. Keep one scenario per test. When you're done, close the browser.
 ```
 </details>
 
@@ -157,6 +157,7 @@ locators. Keep one scenario per test.
    ```
    Turn specs/shop-plan.md into tests in tests/ui/, using the file names in the
    plan. Prefer getByRole and getByLabel locators. Keep one scenario per test.
+   When you're done, close the browser.
    ```
 </details>
 
@@ -167,7 +168,7 @@ Paste:
 ```
 Use the playwright-test-generator agent to turn specs/shop-plan.md into tests
 in tests/ui/, using the file names in the plan. Prefer getByRole and getByLabel
-locators. Keep one scenario per test.
+locators. Keep one scenario per test. When you're done, close the browser.
 ```
 </details>
 
@@ -206,11 +207,22 @@ Open your new files in `tests/ui/` and look for:
 | A test with no `expect` | It clicks around but checks nothing |
 | Money checked as "is this exact text visible?", like `getByText('Total: $75.00').toBeVisible()` | When it fails, the report only says *"not found"*. Prefer `await expect(page.getByText(/^Total:/)).toHaveText('Total: $75.00')`: the report then shows both the expected and the actual value |
 
-Found one? Ask the agent to fix it, for example:
+Found one? Ask the agent to fix it. Use the parts you need:
 ```
-Replace every CSS selector in tests/ui/ with a getByRole or getByLabel locator,
-and every waitForTimeout with a web-first assertion. Then run npm run test:ui.
+Improve the locators in tests/ui/:
+1. Replace every CSS or XPath selector with a getByRole or getByLabel locator,
+   and every waitForTimeout with a web-first assertion.
+2. Replace position-based cell checks such as row.getByRole('cell').nth(2) with
+   a check on the row found by name, for example
+   await expect(page.getByRole('row', { name: /Rose Garden Candle/ })).toContainText('$75.00').
+3. Replace money checks like getByText('Total: $75.00').toBeVisible() with an
+   anchored locator and toHaveText, for example
+   await expect(page.getByText(/^Total:/)).toHaveText('Total: $75.00').
+   Do the same for the Subtotal: and Shipping: lines.
+Keep every expected value the same. Then run npm run test:ui.
 ```
+
+> 💡 **Why `/^Total:/` and not `'Total:'`?** `getByText` matches part of the text by default, so `'Total: $75.00'` also matches *"Subtotal: $75.00"* whenever shipping is free. Playwright then stops with a *strict mode violation: resolved to 2 elements*. The `^` anchors the match to the start of the line, so only the Total line is found.
 
 ---
 
