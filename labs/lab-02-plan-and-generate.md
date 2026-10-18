@@ -97,6 +97,8 @@ Then follow the steps for **your** tool:
 ✅ **Expected:** the agent reports that it's opening the app, clicking through pages and taking page snapshots. After a few minutes, **`specs/shop-plan.md`** appears.
 
 > The agent explores the app through the test runner, which starts its own copy of the app. You won't see it in your browser tab; that's normal.
+>
+> **A browser window the agent opened stays open after the plan is done.** Leave it: the generator reuses it in Step 4. It closes when you exit your AI tool.
 
 ---
 

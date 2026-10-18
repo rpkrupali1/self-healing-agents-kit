@@ -170,6 +170,8 @@ npm run report
 
 ## Step 6 — Refine with ONE targeted prompt (5 min)
 
+**Stay in the same session** for the rest of this lab: the agent already knows its rules and your suite.
+
 Pick **one** of these and paste it. If your suite already covers an option, pick another; **C** works for every suite:
 
 **A. Boundaries**
@@ -217,7 +219,7 @@ The instructor's reference suite is in `reference/api/`. Run it:
 npm run test:ref
 ```
 
-Then let your agent do the comparison. It wasn't allowed to read `reference/` while writing your tests, but now it may. Paste:
+Then let your agent do the comparison, in the same session. It wasn't allowed to read `reference/` while writing your tests, but now it may. Paste:
 ```
 Now compare your suite in tests/api/ with the instructor's reference suite in
 reference/api/. You may read reference/ now. Answer from the test files only:
