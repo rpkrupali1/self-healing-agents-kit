@@ -75,7 +75,9 @@ Before you change anything, classify every failure as one of:
 For each one, give your evidence and a confidence from 0 to 100%.
 Only heal STALE TEST failures with confidence of 80% or more.
 Never change an expected value in an assertion about money, totals or
-business rules. Mark those as REGRESSION and leave the test failing.
+business rules. Mark those as REGRESSION. In a REGRESSION test, still update
+any stale locators and copy so the test runs to its business assertion, then
+leave it failing there, on the real bug.
 Don't edit anything in app/. Finish with a table: test, classification,
 confidence, change made.
 ```
@@ -95,7 +97,9 @@ confidence, change made.
    For each one, give your evidence and a confidence from 0 to 100%.
    Only heal STALE TEST failures with confidence of 80% or more.
    Never change an expected value in an assertion about money, totals or
-   business rules. Mark those as REGRESSION and leave the test failing.
+   business rules. Mark those as REGRESSION. In a REGRESSION test, still update
+   any stale locators and copy so the test runs to its business assertion, then
+   leave it failing there, on the real bug.
    Don't edit anything in app/. Finish with a table: test, classification,
    confidence, change made.
    ```
@@ -114,7 +118,9 @@ Before you change anything, classify every failure as one of:
 For each one, give your evidence and a confidence from 0 to 100%.
 Only heal STALE TEST failures with confidence of 80% or more.
 Never change an expected value in an assertion about money, totals or
-business rules. Mark those as REGRESSION and leave the test failing.
+business rules. Mark those as REGRESSION. In a REGRESSION test, still update
+any stale locators and copy so the test runs to its business assertion, then
+leave it failing there, on the real bug.
 Don't edit anything in app/. Finish with a table: test, classification,
 confidence, change made.
 ```
@@ -142,6 +148,7 @@ This shows only what the healer changed since your snapshot in Step 1. For each 
 | **Did anything get looser?** | `toHaveText` turned into `toBeVisible`, an exact string turned into a regex, an `expect` deleted |
 | **Did any expected number change?** | A total, a price or a count edited to match what the app now shows |
 | **Is anything still red?** | Run `npm run test:ui`. Should anything still be red? |
+| **Does each red test fail for the right reason?** | Open the report. A regression should fail on its **business assertion** (for example a wrong total), not on an old locator like *"can't find 'Add to cart'"*. A locator failure hides the real bug |
 
 ---
 
@@ -151,37 +158,57 @@ Turn to your neighbour. Using the diff and the healer's table, decide:
 
 - Which heals would you **accept**?
 - Which would you **reject**, and why?
-- Is any test **still red**? Is that the right answer?
+- Is any test **still red**? Open its failure in the report (`npm run report`). What do the **expected and actual values** tell you: did the test go stale, or did the app break?
 
 Be ready to share one example with the room.
 
 ---
 
+> ⏸ **Stop here and wait for the instructor.** We'll look at the results together before Step 6.
+
+---
+
 ## Step 6 — Ask your Lab 1 suite (2 min)
 
-Your Lab 1 API tests weren't touched by the healer. Run them against this version of the app:
+Your Lab 1 API tests weren't touched by the healer, and they were written from the spec without ever seeing the UI. Run them against this version of the app:
 
 ```bash
 npm run test:api
 ```
 
-Which tests fail? What do the failures tell you about the "refactor"?
+✅ **Expected:** **some** API tests fail, and the rest pass.
+
+**What to do with the failures: nothing.** Don't heal them. Look at which tests failed and at their expected and actual values:
+- Do they fail on the same kind of problem as your red UI tests?
+- If two suites written in different ways reach the same verdict, is the problem in the tests or in the app?
 
 ---
 
 ## Step 7 — Compare with the reference, then put it back (3 min)
 
-The instructor's healed suite is in `reference/healed/`. Run it against v2:
+**1. Run the instructor's healed suite** (the answer key) against this version of the app:
 ```bash
 npm run test:healed
 ```
+✅ **Expected:** **4 passed, 1 failed.** The one failure was left red on purpose. Open `reference/healed/shop.spec.ts`: each change is marked **HEALED**, and the comment on the red test explains why it was **NOT HEALED**.
 
-Open `reference/healed/shop.spec.ts`. Its comments mark each **HEALED** change, and the one change that was deliberately **NOT HEALED**. Compare with your diff.
+**2. Compare with your healer's work.** Don't do it by hand; stay in the same session and paste:
+```
+Compare the changes in git diff tests/ui with reference/healed/shop.spec.ts.
+Briefly, in a table: which changes did both make, which did only one make,
+and did both leave the same kind of test red, for the same reason?
+Don't change any files.
+```
 
-Then switch the app back:
+**3. Put the app back:**
 ```bash
 npm run restore
 ```
+✅ **Expected:** `Restored v1.`
+
+> After the restore, your healed UI tests may fail again, because they now expect the v2 wording. That's expected.
+>
+> **Optional clean-up:** `git restore --staged tests/ui` removes the Step 1 snapshot. Your test files stay as they are.
 
 ---
 

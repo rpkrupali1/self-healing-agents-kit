@@ -20,7 +20,9 @@ Before you change anything, classify every failure as one of:
 For each one, give your evidence and a confidence from 0 to 100%.
 Only heal STALE TEST failures with confidence of 80% or more.
 Never change an expected value in an assertion about money, totals or
-business rules. Mark those as REGRESSION and leave the test failing.
+business rules. Mark those as REGRESSION. In a REGRESSION test, still update
+any stale locators and copy so the test runs to its business assertion, then
+leave it failing there, on the real bug.
 ```
 
 ## 3. Decide: would YOU merge it?

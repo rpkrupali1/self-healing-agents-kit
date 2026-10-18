@@ -202,6 +202,7 @@ Open your new files in `tests/ui/` and look for:
 | Position-based locators, like `.nth(2)` or `.first()` on table cells | They break when columns or rows are reordered, even with no CSS in sight. Ask for a locator by name, such as `getByRole('row', { name: 'Peony Bouquet' })` |
 | `waitForTimeout(...)` | Fixed waits make tests slow and flaky. Ask for a web-first assertion such as `await expect(...).toBeVisible()` |
 | A test with no `expect` | It clicks around but checks nothing |
+| Money checked as "is this exact text visible?", like `getByText('Total: $75.00').toBeVisible()` | When it fails, the report only says *"not found"*. Prefer `await expect(page.getByText(/^Total:/)).toHaveText('Total: $75.00')`: the report then shows both the expected and the actual value |
 
 Found one? Ask the agent to fix it, for example:
 ```
