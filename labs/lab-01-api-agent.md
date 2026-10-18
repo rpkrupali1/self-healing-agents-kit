@@ -155,14 +155,16 @@ npx playwright test --project=api. Then summarise the results.
 
 ## Step 5 — Run it yourself (2 min)
 
-Never just trust the agent's summary.
+Never just trust the agent's summary, and some agents (and models) skip running the tests altogether. Run them yourself:
 
 ```bash
 npm run test:api
 npm run report
 ```
 
-`npm run report` opens the HTML report in your browser. Click a test to see each request it made.
+✅ **Expected:** the terminal lists each test and ends with a count such as `80 passed`. `npm run report` then opens the HTML report in your browser: click a test to see each request it made.
+
+> 💡 **No browser window opens while API tests run.** That's normal: API tests send requests straight to the app's API, with no pages to click. You'll see browsers in Labs 2 and 3.
 
 ---
 
@@ -251,6 +253,7 @@ Answer briefly, in a table:
 | Agent edited `app/` or `openapi.yaml` | Undo it with `git checkout -- app openapi.yaml`, then remind it of the rules in `agents/api-test-generator.md` |
 | `Error: No tests found` | The files aren't in `tests/api/`, or don't end in `.spec.ts` |
 | `Error: http://localhost:3100 is already used` | Another test run is still going. Wait for it to finish, or close the old terminal |
+| Agent wrote the tests but didn't run them | Say: *"Run npx playwright test --project=api now and summarise the results."* Or just do Step 5 yourself |
 | Agent can't run commands | Copilot: make sure you're in **Agent** mode. Any tool: run `npm run test:api` yourself and paste the output into the chat |
 | Free-tier rate limit reached | Switch to another model in your tool, or pair with a neighbour |
 | You're stuck | Copy one file from `reference/api/` into `tests/api/` and continue from Step 7 |
