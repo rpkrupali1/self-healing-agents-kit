@@ -9,8 +9,8 @@ Agent instructions: [agents/api-test-generator.md](../agents/api-test-generator.
 ## Generate
 
 ```
-Read openapi.yaml and show me the coverage matrix first. Wait for my OK before
-you write any tests.
+Read openapi.yaml and show me the coverage matrix first, saved as
+tests/api/coverage-matrix.md. Wait for my OK before you write any tests.
 ```
 
 ```

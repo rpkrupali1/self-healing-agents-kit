@@ -13,12 +13,16 @@ test suite that a senior tester would sign off on.
 1. **Read the spec end to end.** Note every operation, its documented
    responses, its request schema, and every business rule in the descriptions
    (for example pricing and shipping rules).
-2. **Show a coverage matrix before writing any code.** One row per operation,
-   with exactly these columns: **Operation · Happy path · Documented errors ·
-   Schema check · Boundaries / data-driven**. In the Schema check column, name
-   the response schema you will check exactly for that operation, including
-   the `{ error }` body of every error status. Mark what you will cover and
-   why. **Then stop and wait for the user's approval.**
+2. **Write a coverage matrix before writing any code.** Save it as
+   `tests/api/coverage-matrix.md`: a Markdown table with one row per operation
+   and exactly these columns: **Operation · Happy path · Documented errors ·
+   Schema check · Boundaries / data-driven**. Keep every cell short: a few
+   words, status codes and values (for example "400, 404, 409" or "qty 0, 1,
+   10, 11"), never full sentences. In the Schema check column, name the
+   response schema checked for that operation, including the `{ error }` body
+   of every error status. Below the table, list any spec gaps in one line each.
+   In the chat, reply with only a 3–5 line summary and the file name. **Then
+   stop and wait for the user's approval.**
 3. **Write the tests.** One file per spec tag: `tests/api/catalog.spec.ts`,
    `tests/api/cart.spec.ts`, `tests/api/orders.spec.ts`.
 4. **Run** `npx playwright test --project=api` and report the results

@@ -55,7 +55,8 @@ Then follow the steps for **your** tool:
 2. Paste this prompt:
    ```
    Use the api-test-generator agent. Read openapi.yaml and show me the coverage
-   matrix first. Wait for my OK before you write any tests.
+   matrix first, saved as tests/api/coverage-matrix.md. Wait for my OK before
+   you write any tests.
    ```
    Claude Code loads the agent from `.claude/agents/` automatically.
 </details>
@@ -72,7 +73,8 @@ Then follow the steps for **your** tool:
    ```
    Read the file agents/api-test-generator.md and follow it as your
    instructions for the rest of this session. Then read openapi.yaml and show
-   me the coverage matrix first. Wait for my OK before you write any tests.
+   me the coverage matrix first, saved as tests/api/coverage-matrix.md. Wait for
+   my OK before you write any tests.
    ```
    If Copilot says it can't find the file, type `#file:agents/api-test-generator.md` at the start of the prompt to attach it.
 </details>
@@ -88,7 +90,8 @@ Then follow the steps for **your** tool:
    ```
    Read the file agents/api-test-generator.md and follow it as your
    instructions for the rest of this session. Then read openapi.yaml and show
-   me the coverage matrix first. Wait for my OK before you write any tests.
+   me the coverage matrix first, saved as tests/api/coverage-matrix.md. Wait for
+   my OK before you write any tests.
    ```
 </details>
 
@@ -103,19 +106,22 @@ Then follow the steps for **your** tool:
    ```
    Read the file agents/api-test-generator.md and follow it as your
    instructions for the rest of this session. Then read openapi.yaml and show
-   me the coverage matrix first. Wait for my OK before you write any tests.
+   me the coverage matrix first, saved as tests/api/coverage-matrix.md. Wait for
+   my OK before you write any tests.
    ```
 </details>
 
 **All tools:** when the agent asks permission to read files, edit files or run a command, **allow it**.
 
-✅ **Expected:** the agent replies with a **coverage matrix**, a table with one row per API operation, and **stops**. It hasn't written any files yet.
+✅ **Expected:** the agent writes **`tests/api/coverage-matrix.md`**, replies with a short summary, and **stops**. It hasn't written any tests yet.
+
+**To read the matrix:** open `tests/api/coverage-matrix.md` in VS Code and press **Ctrl+Shift+V** (**⇧⌘V** on Mac) for the preview. It shows as a clean table.
 
 ---
 
 ## Step 3 — Review the matrix before any code exists (5 min)
 
-This is the cheapest moment to catch gaps. Tick each one:
+In the preview of `tests/api/coverage-matrix.md`, tick each one. This is the cheapest moment to catch gaps:
 
 - [ ] All **9 operations** are listed: health, categories, products list, product by slug, get cart, add item, remove item, checkout, get order. *Some agents list the `?category=` filter as its own row, so you may see 10. That's fine.*
 - [ ] **400, 404 and 409** each appear somewhere
@@ -126,7 +132,7 @@ This is the cheapest moment to catch gaps. Tick each one:
 If something is missing, tell the agent. For example:
 ```
 Your matrix has no 409 case. Add one for adding more than the product's stock.
-Show me the updated matrix.
+Update tests/api/coverage-matrix.md and wait for my OK.
 ```
 
 ---
