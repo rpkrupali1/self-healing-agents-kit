@@ -69,6 +69,7 @@ Then follow the steps for **your** tool:
 3. At the bottom of the Chat panel:
    - Set the mode dropdown to **Agent**. *Ask* or *Edit* mode can't run commands.
    - Leave the button next to it on **Auto**, optimized for **Balance**. If the agent's tests look weak, switch it to **Intelligence**.
+   - If Copilot says it **can't run commands**, that's fine: you'll run the tests yourself in Step 5.
 4. Paste this prompt:
    ```
    Read the file agents/api-test-generator.md and follow it as your
@@ -147,7 +148,7 @@ npx playwright test --project=api. Then summarise the results.
 
 ✅ **Expected:**
 - **Three** new files in `tests/api/`: `catalog.spec.ts`, `cart.spec.ts` and `orders.spec.ts`. Only two? See Troubleshooting
-- The agent runs the tests and reports how many passed and failed
+- If your agent can run commands, it runs the tests and reports how many passed and failed. If it says it can't, that's fine: Step 5 covers it
 
 > 💡 **On this version of the app, the API matches the spec.** So a failing test here usually means **the test is wrong**, not the app. Keep that failure. It's great material for Step 7.
 
@@ -162,7 +163,9 @@ npm run test:api
 npm run report
 ```
 
-✅ **Expected:** the terminal lists each test and ends with a count such as `80 passed`. `npm run report` then opens the HTML report in your browser: click a test to see each request it made.
+✅ **Expected:** the terminal lists each test and ends with a count of passed tests. `npm run report` then opens the HTML report in your browser: click a test to see each request it made.
+
+📝 **How many tests did your agent write?** It depends on the model: in rehearsals it ranged from **25 to 80**. Note your number; we'll compare in the debrief. More isn't automatically better: Step 7 is about how good they are.
 
 > 💡 **No browser window opens while API tests run.** That's normal: API tests send requests straight to the app's API, with no pages to click. You'll see browsers in Labs 2 and 3.
 
@@ -256,7 +259,7 @@ Answer briefly, in a table:
 | `Error: No tests found` | The files aren't in `tests/api/`, or don't end in `.spec.ts` |
 | `Error: http://localhost:3100 is already used` | Another test run is still going. Wait for it to finish, or close the old terminal |
 | Agent wrote the tests but didn't run them | Say: *"Run npx playwright test --project=api now and summarise the results."* Or just do Step 5 yourself |
-| Agent can't run commands | Copilot: make sure you're in **Agent** mode. Any tool: run `npm run test:api` yourself and paste the output into the chat |
+| Agent says it can't run the tests, for example *"no terminal or command execution tool"* | **Copilot:** check the mode dropdown says **Agent** (Ask and Edit modes can't run commands), and in the chat's **tools** menu (🔧) make sure the terminal tool is ticked. **Any tool:** it doesn't matter for the lab. Run `npm run test:api` yourself (Step 5), and paste the output into the chat if you want the agent to act on it |
 | Free-tier rate limit reached | Switch to another model in your tool, or pair with a neighbour |
 | You're stuck | Copy one file from `reference/api/` into `tests/api/` and continue from Step 7 |
 
